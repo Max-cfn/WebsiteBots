@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AMC Labs — Algorithmic trading infrastructure. Building execution engines and on-chain data pipelines. Independent." />
+  <meta name="keywords" content="algorithmic trading, on-chain data, Chainlink, execution engine, quant, AMC Labs" />
+  <meta name="author" content="AMC Labs" />
+  <meta property="og:title" content="AMC Labs — Algorithmic Trading Infrastructure" />
+  <meta property="og:description" content="Building execution engines and on-chain data pipelines. Independent." />
+  <meta property="og:type" content="website" />
+  <title>AMC Labs — Algorithmic Trading Infrastructure</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── Index-specific styles ─── */
+
+    /* Hero */
+    .hero {
+      padding: 100px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--green);
+      border: 1px solid rgba(0, 255, 135, 0.2);
+      padding: 5px 12px;
+      border-radius: 2px;
+      margin-bottom: 28px;
+    }
+
+    .hero-tag .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    .hero h1 {
+      max-width: 700px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 .accent-green { color: var(--green); }
+    .hero h1 .accent-cyan  { color: var(--cyan); }
+
+    .hero-tagline {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      color: var(--text-dim);
+      max-width: 540px;
+      margin-bottom: 40px;
+      line-height: 1.9;
+    }
+
+    .hero-tagline strong {
+      color: var(--cyan);
+      font-weight: 400;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .hero-meta {
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+    }
+
+    /* ASCII Ticker / data decoration */
+    .data-strip {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-2);
+      overflow: hidden;
+      padding: 10px 0;
+      position: relative;
+    }
+
+    .ticker-track {
+      display: flex;
+      gap: 0;
+      animation: ticker 28s linear infinite;
+      white-space: nowrap;
+    }
+
+    .ticker-track:hover { animation-play-state: paused; }
+
+    @keyframes ticker {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .ticker-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 28px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--text-dim);
+      border-right: 1px solid var(--border);
+    }
+
+    .ticker-item .sym   { color: #fff; font-weight: 700; }
+    .ticker-item .up    { color: var(--green); }
+    .ticker-item .down  { color: #ff4d6d; }
+    .ticker-item .delta { font-size: 10px; }
+
+    /* Features */
+    .features {
+      padding: 80px 0;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .feature-block {
+      background: var(--bg);
+      padding: 40px 32px;
+      position: relative;
+      transition: background var(--transition);
+    }
+
+    .feature-block:hover {
+      background: var(--bg-2);
+    }
+
+    .feature-icon {
+      font-family: var(--font-mono);
+      font-size: 22px;
+      margin-bottom: 20px;
+      display: block;
+      color: var(--green);
+    }
+
+    .feature-block h3 {
+      margin-bottom: 12px;
+      font-size: 1rem;
+    }
+
+    .feature-block p {
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.8;
+    }
+
+    .feature-num {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      font-size: 11px;
+      color: var(--border);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+    }
+
+    /* ASCII grid decoration */
+    .ascii-deco {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      line-height: 1.4;
+      color: var(--border);
+      user-select: none;
+      pointer-events: none;
+      overflow: hidden;
+      padding: 32px 0;
+      text-align: center;
+      letter-spacing: 0.15em;
+    }
+
+    /* CTA section */
+    .cta-section {
+      padding: 80px 0;
+      text-align: center;
+    }
+
+    .cta-section p {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-top: 16px;
+      letter-spacing: 0.05em;
+    }
+
+    /* Stats row */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--border);
+    }
+
+    .stat-item {
+      padding: 32px;
+      border-right: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .stat-item:last-child { border-right: none; }
+
+    .stat-value {
+      font-family: var(--font-head);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--green);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 64px 0 56px; }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-row {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-item {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .stat-item:last-child { border-bottom: none; }
+
+      .ascii-deco { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ────────────────────────────────────────────── -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-bracket">[</span>AMC Labs<span class="logo-bracket">]</span>
+      <span class="logo-sub">/ amc-group.fr</span>
+    </a>
+    <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+      <a href="index.html" class="active">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ── Main ──────────────────────────────────────────────── -->
+<main>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-tag">
+        <span class="dot"></span>
+        Independent Builder · Ireland
+      </div>
+      <h1>AMC Labs —<br><span class="accent-green">Algorithmic</span> <span class="accent-cyan">Trading</span><br>Infrastructure</h1>
+      <p class="hero-tagline">
+        Building execution engines and on-chain data pipelines.<br>
+        <strong>Independent.</strong>
+      </p>
+      <div class="hero-actions">
+        <a href="projects.html" class="btn btn-primary">View Projects &rarr;</a>
+        <a href="about.html" class="btn btn-outline">About AMC Labs</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Ticker -->
+  <div class="data-strip" aria-hidden="true">
+    <div class="ticker-track" id="ticker">
+      <!-- populated twice for seamless loop -->
+      <span class="ticker-item"><span class="sym">BTC/USD</span><span class="up">▲ 67,412.30</span><span class="delta up">+1.42%</span></span>
+      <span class="ticker-item"><span class="sym">ETH/USD</span><span class="up">▲ 3,218.55</span><span class="delta up">+0.87%</span></span>
+      <span class="ticker-item"><span class="sym">LINK/USD</span><span class="up">▲ 14.72</span><span class="delta up">+2.11%</span></span>
+      <span class="ticker-item"><span class="sym">MATIC/USD</span><span class="down">▼ 0.5831</span><span class="delta down">-0.63%</span></span>
+      <span class="ticker-item"><span class="sym">SOL/USD</span><span class="up">▲ 152.40</span><span class="delta up">+3.04%</span></span>
+      <span class="ticker-item"><span class="sym">AVAX/USD</span><span class="down">▼ 28.91</span><span class="delta down">-1.18%</span></span>
+      <span class="ticker-item"><span class="sym">ARB/USD</span><span class="up">▲ 0.9912</span><span class="delta up">+0.44%</span></span>
+      <span class="ticker-item"><span class="sym">DOGE/USD</span><span class="up">▲ 0.1374</span><span class="delta up">+1.75%</span></span>
+      <!-- duplicate for seamless loop -->
+      <span class="ticker-item"><span class="sym">BTC/USD</span><span class="up">▲ 67,412.30</span><span class="delta up">+1.42%</span></span>
+      <span class="ticker-item"><span class="sym">ETH/USD</span><span class="up">▲ 3,218.55</span><span class="delta up">+0.87%</span></span>
+      <span class="ticker-item"><span class="sym">LINK/USD</span><span class="up">▲ 14.72</span><span class="delta up">+2.11%</span></span>
+      <span class="ticker-item"><span class="sym">MATIC/USD</span><span class="down">▼ 0.5831</span><span class="delta down">-0.63%</span></span>
+      <span class="ticker-item"><span class="sym">SOL/USD</span><span class="up">▲ 152.40</span><span class="delta up">+3.04%</span></span>
+      <span class="ticker-item"><span class="sym">AVAX/USD</span><span class="down">▼ 28.91</span><span class="delta down">-1.18%</span></span>
+      <span class="ticker-item"><span class="sym">ARB/USD</span><span class="up">▲ 0.9912</span><span class="delta up">+0.44%</span></span>
+      <span class="ticker-item"><span class="sym">DOGE/USD</span><span class="up">▲ 0.1374</span><span class="delta up">+1.75%</span></span>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <section class="features">
+    <div class="container">
+      <div class="section-header">
+        <span class="label">// core capabilities</span>
+        <h2>What AMC Labs builds</h2>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-block">
+          <span class="feature-num">01</span>
+          <span class="feature-icon">⬡</span>
+          <h3>On-Chain Data Integration</h3>
+          <p>Direct consumption of Chainlink Data Feeds via smart contract reads. Low-latency price reference data for bots and dashboards — no middlemen, no stale feeds.</p>
+        </div>
+        <div class="feature-block">
+          <span class="feature-num">02</span>
+          <span class="feature-icon">⚡</span>
+          <h3>Execution Engines</h3>
+          <p>Python-based parallel execution across prediction markets and DEXes. Complete-or-Abort logic, position sizing, and real-time order management.</p>
+        </div>
+        <div class="feature-block">
+          <span class="feature-num">03</span>
+          <span class="feature-icon">◈</span>
+          <h3>Market Intelligence</h3>
+          <p>Arbitrage detection, cross-market discrepancy monitoring, and latency tracking. Signals flow directly into execution layers with minimal overhead.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ASCII decoration -->
+  <div class="ascii-deco" aria-hidden="true">
+    <pre>
+  ┌─────────────────────────────────────────────────────────────────────┐
+  │  FEED  │  BLOCK   │  LATENCY  │  DEVIATION  │  HEARTBEAT  │  NET   │
+  │────────┼──────────┼───────────┼─────────────┼─────────────┼────────│
+  │ BTC/USD│ 19847261 │   1.2ms   │   0.001%    │    3600s    │   OK   │
+  │ ETH/USD│ 19847261 │   1.1ms   │   0.005%    │    3600s    │   OK   │
+  │ LINK/US│ 19847261 │   1.4ms   │   0.003%    │    3600s    │   OK   │
+  └─────────────────────────────────────────────────────────────────────┘</pre>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Stats -->
+  <section style="padding: 64px 0;">
+    <div class="container">
+      <div class="stats-row">
+        <div class="stat-item">
+          <span class="stat-value">3</span>
+          <span class="stat-label">Active Projects</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">24/7</span>
+          <span class="stat-label">Uptime Target</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">On-chain</span>
+          <span class="stat-label">Data Source</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <span class="label">// next step</span>
+      <h2 style="margin-top: 12px; margin-bottom: 24px;">See the work in progress</h2>
+      <a href="projects.html" class="btn btn-primary">Explore Projects &rarr;</a>
+      <p>Python · Chainlink · On-chain · Live</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── Footer ────────────────────────────────────────────── -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p class="footer-copy">&copy; 2024 <span>AMC Labs</span> · amc-group.fr · All rights reserved</p>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav toggle
+  const toggle = document.getElementById('nav-toggle');
+  const nav    = document.getElementById('site-nav');
+  toggle.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open);
+  });
+
+  // Close nav on link click
+  nav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      nav.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
+</body>
+</html>
