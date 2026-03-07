@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Contact AMC Labs — algorithmic trading infrastructure. Data feed access, technical questions, collaboration." />
+  <meta name="author" content="AMC Labs" />
+  <meta property="og:title" content="Contact — AMC Labs" />
+  <meta property="og:description" content="Get in touch with AMC Labs for data feed access requests, technical questions, or collaboration." />
+  <meta property="og:type" content="website" />
+  <title>Contact — AMC Labs</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── Contact-specific styles ─── */
+
+    .contact-section {
+      padding: 72px 0;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 64px;
+      align-items: start;
+    }
+
+    /* Form */
+    .contact-form-wrap h2 {
+      margin-bottom: 8px;
+    }
+
+    .contact-form-wrap .sub {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-bottom: 36px;
+      line-height: 1.8;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-submit {
+      margin-top: 8px;
+    }
+
+    .form-note {
+      margin-top: 12px;
+      font-size: 11px;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+
+    /* Form feedback */
+    .form-feedback {
+      display: none;
+      margin-top: 16px;
+      padding: 14px 18px;
+      border-radius: 2px;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .form-feedback.success {
+      display: block;
+      background: rgba(0, 255, 135, 0.06);
+      border: 1px solid rgba(0, 255, 135, 0.2);
+      color: var(--green);
+    }
+
+    .form-feedback.error {
+      display: block;
+      background: rgba(255, 77, 109, 0.06);
+      border: 1px solid rgba(255, 77, 109, 0.2);
+      color: #ff4d6d;
+    }
+
+    /* Info sidebar */
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .info-block {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 24px;
+    }
+
+    .info-block h4 {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+    }
+
+    .info-email {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--cyan);
+      word-break: break-all;
+    }
+
+    .info-email svg {
+      flex-shrink: 0;
+      opacity: 0.6;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 12px;
+      font-size: 12px;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+
+    .info-item:last-child { margin-bottom: 0; }
+
+    .info-item .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+
+    /* Terminal receipt */
+    .terminal-receipt {
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 20px;
+      font-size: 11px;
+      line-height: 2;
+    }
+
+    .tr-key   { color: var(--text-dim); }
+    .tr-val   { color: var(--cyan); }
+    .tr-arrow { color: var(--green); margin: 0 4px; }
+    .tr-ok    { color: var(--green); }
+
+    @media (max-width: 900px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .contact-info { order: -1; }
+    }
+
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ────────────────────────────────────────────── -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-bracket">[</span>AMC Labs<span class="logo-bracket">]</span>
+      <span class="logo-sub">/ amc-group.fr</span>
+    </a>
+    <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html" class="active">Contact</a>
+    </nav>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ── Main ──────────────────────────────────────────────── -->
+<main>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <span class="label">// contact</span>
+      <h1>Get in touch<span class="cursor"></span></h1>
+    </div>
+  </section>
+
+  <section class="contact-section">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- Form -->
+        <div class="contact-form-wrap">
+          <h2>Send a message</h2>
+          <p class="sub">
+            Data feed access requests, technical questions, or collaboration inquiries.
+            Serious messages only — no sales, no cold outreach.
+          </p>
+
+          <form
+            class="contact-form"
+            id="contact-form"
+            action="https://formspree.io/f/xpzvgjze"
+            method="POST"
+          >
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Your name"
+                  required
+                  autocomplete="name"
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="your@email.com"
+                  required
+                  autocomplete="email"
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input
+                type="text"
+                id="subject"
+                name="subject"
+                placeholder="Data feed access / Technical inquiry / Other"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                placeholder="Describe your inquiry in detail..."
+                required
+              ></textarea>
+            </div>
+
+            <!-- Honeypot field for spam prevention -->
+            <input type="text" name="_gotcha" style="display:none" />
+            <input type="hidden" name="_subject" value="[AMC Labs] New contact form submission" />
+
+            <div class="form-submit">
+              <button type="submit" class="btn btn-primary" id="submit-btn">
+                Send Message &rarr;
+              </button>
+            </div>
+
+            <p class="form-note">
+              Alternatively, email directly:
+              <a href="mailto:maxence.cerfontaine@amc-group.fr">maxence.cerfontaine@amc-group.fr</a>
+            </p>
+
+            <div class="form-feedback" id="form-feedback" role="alert"></div>
+          </form>
+        </div>
+
+        <!-- Info sidebar -->
+        <aside class="contact-info">
+
+          <div class="info-block">
+            <h4>Direct email</h4>
+            <a class="info-email" href="mailto:maxence.cerfontaine@amc-group.fr">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                <path d="m2 7 10 7 10-7"/>
+              </svg>
+              maxence.cerfontaine@amc-group.fr
+            </a>
+          </div>
+
+          <div class="info-block">
+            <h4>What to expect</h4>
+            <div class="info-item">
+              <span class="dot"></span>
+              <span>Response within 1–2 business days</span>
+            </div>
+            <div class="info-item">
+              <span class="dot"></span>
+              <span>Technical questions answered directly</span>
+            </div>
+            <div class="info-item">
+              <span class="dot"></span>
+              <span>Data feed access requests reviewed individually</span>
+            </div>
+            <div class="info-item">
+              <span class="dot"></span>
+              <span>No sales calls, no demos — async only</span>
+            </div>
+          </div>
+
+          <div class="terminal-receipt" aria-hidden="true">
+            <span class="tr-key">entity</span><span class="tr-arrow">→</span><span class="tr-val">AMC Labs</span><br>
+            <span class="tr-key">domain</span><span class="tr-arrow">→</span><span class="tr-val">amc-group.fr</span><br>
+            <span class="tr-key">location</span><span class="tr-arrow">→</span><span class="tr-val">Ireland</span><br>
+            <span class="tr-key">type</span><span class="tr-arrow">→</span><span class="tr-val">solo-builder</span><br>
+            <span class="tr-key">oracle</span><span class="tr-arrow">→</span><span class="tr-val">Chainlink</span><br>
+            <span class="tr-key">status</span><span class="tr-arrow">→</span><span class="tr-ok">ACTIVE</span>
+          </div>
+
+        </aside>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── Footer ────────────────────────────────────────────── -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p class="footer-copy">&copy; 2024 <span>AMC Labs</span> · amc-group.fr · All rights reserved</p>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav toggle
+  const toggle = document.getElementById('nav-toggle');
+  const nav    = document.getElementById('site-nav');
+  toggle.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open);
+  });
+  nav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      nav.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Form submission with fetch (Formspree AJAX)
+  const form     = document.getElementById('contact-form');
+  const feedback = document.getElementById('form-feedback');
+  const submitBtn = document.getElementById('submit-btn');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    submitBtn.textContent = 'Sending...';
+    submitBtn.disabled = true;
+    feedback.className = 'form-feedback';
+    feedback.textContent = '';
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (res.ok) {
+        feedback.className = 'form-feedback success';
+        feedback.textContent = '✓ Message sent. You will receive a reply within 1–2 business days.';
+        form.reset();
+      } else {
+        const data = await res.json();
+        throw new Error(data.error || 'Submission failed');
+      }
+    } catch (err) {
+      feedback.className = 'form-feedback error';
+      feedback.textContent = 'Submission failed. Please email directly: maxence.cerfontaine@amc-group.fr';
+    } finally {
+      submitBtn.textContent = 'Send Message →';
+      submitBtn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>
