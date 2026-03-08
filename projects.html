@@ -253,20 +253,20 @@
       <!-- Metrics bar -->
       <div class="metrics-bar">
         <div class="metric-cell">
-          <span class="metric-val" id="m-eth">—</span>
-          <span class="metric-lab">ETH / USD</span>
+          <span class="metric-val">3</span>
+          <span class="metric-lab">Projects</span>
         </div>
         <div class="metric-cell">
-          <span class="metric-val" id="m-markets">—</span>
-          <span class="metric-lab">Open Markets</span>
+          <span class="metric-val">0</span>
+          <span class="metric-lab">Live</span>
         </div>
         <div class="metric-cell">
-          <span class="metric-val" id="m-uptime">—</span>
-          <span class="metric-lab">Bot Uptime</span>
+          <span class="metric-val">3</span>
+          <span class="metric-lab">In Development</span>
         </div>
         <div class="metric-cell">
-          <span class="metric-val" id="m-spreads">—</span>
-          <span class="metric-lab">Spreads Detected</span>
+          <span class="metric-val">On-chain</span>
+          <span class="metric-lab">Data Source</span>
         </div>
       </div>
 
@@ -480,7 +480,6 @@
 </footer>
 
 <script>
-  /* ── Nav toggle ─────────────────────────────────────────── */
   const toggle = document.getElementById('nav-toggle');
   const nav    = document.getElementById('site-nav');
   toggle.addEventListener('click', () => {
@@ -493,94 +492,6 @@
       toggle.setAttribute('aria-expanded', 'false');
     });
   });
-
-  /* ── Live metrics ───────────────────────────────────────── */
-
-  // 1. ETH price — CoinGecko free API, refresh every 30s
-  async function fetchEth() {
-    try {
-      const r = await fetch(
-        'https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd',
-        { cache: 'no-store' }
-      );
-      const d = await r.json();
-      const price = d.ethereum.usd;
-      document.getElementById('m-eth').textContent =
-        '$' + price.toLocaleString('en-US', { maximumFractionDigits: 0 });
-    } catch {
-      // keep last value on error
-    }
-  }
-  fetchEth();
-  setInterval(fetchEth, 30_000);
-
-  // 2. Polymarket open markets count — public gamma API
-  async function fetchMarkets() {
-    try {
-      const r = await fetch(
-        'https://gamma-api.polymarket.com/markets?limit=1&active=true&closed=false',
-        { cache: 'no-store' }
-      );
-      // API returns array; count comes from Link/total header or pagination
-      // Fallback: query with high limit and read length, or use known approximate
-      const el = document.getElementById('m-markets');
-      if (r.ok) {
-        // Try to read X-Total-Count or similar header
-        const total = r.headers.get('x-total-count') || r.headers.get('total');
-        if (total) {
-          el.textContent = (+total).toLocaleString('en-US');
-          return;
-        }
-      }
-      // Fallback: fetch a larger slice to estimate
-      const r2 = await fetch(
-        'https://gamma-api.polymarket.com/markets?limit=500&active=true&closed=false',
-        { cache: 'no-store' }
-      );
-      const data = await r2.json();
-      if (Array.isArray(data) && data.length > 0) {
-        // If we get 500, the real count is >= 500; display "500+"
-        el.textContent = data.length >= 500 ? '500+' : data.length.toLocaleString('en-US');
-      }
-    } catch {
-      document.getElementById('m-markets').textContent = '~1 200';
-    }
-  }
-  fetchMarkets();
-  setInterval(fetchMarkets, 120_000);
-
-  // 3. Bot uptime — live counter since test start date
-  const BOT_START = new Date('2026-01-15T08:00:00Z');
-  function updateUptime() {
-    const diff = Date.now() - BOT_START.getTime();
-    const d = Math.floor(diff / 86_400_000);
-    const h = Math.floor((diff % 86_400_000) / 3_600_000);
-    const m = Math.floor((diff % 3_600_000) / 60_000);
-    document.getElementById('m-uptime').textContent =
-      d + 'd ' + String(h).padStart(2, '0') + 'h ' + String(m).padStart(2, '0') + 'm';
-  }
-  updateUptime();
-  setInterval(updateUptime, 60_000);
-
-  // 4. Spreads detected — simulated counter, increments ~2–5 per minute
-  (function () {
-    // Seed from elapsed time since bot start so value survives page reloads
-    const elapsed = Math.max(0, Date.now() - BOT_START.getTime());
-    const ratePerMs = 3.5 / 60_000; // ~3.5 spreads/min on average
-    let count = Math.floor(elapsed * ratePerMs);
-    const el = document.getElementById('m-spreads');
-    function render() {
-      el.textContent = count.toLocaleString('en-US');
-    }
-    render();
-    // Random increment every 15–30s to mimic live detection
-    function tick() {
-      count += Math.floor(Math.random() * 4) + 1;
-      render();
-      setTimeout(tick, 15_000 + Math.random() * 15_000);
-    }
-    setTimeout(tick, 15_000 + Math.random() * 15_000);
-  })();
 </script>
 </body>
 </html>
