@@ -416,77 +416,72 @@
 </script>
 
 <script>
-  // ── Live Crypto Ticker ────────────────────────────────────────
+  // ── Live Crypto Ticker (Binance public API — no key required) ──
   (function () {
     const COINS = [
-      { id: 'bitcoin',       sym: 'BTC/USD' },
-      { id: 'ethereum',      sym: 'ETH/USD' },
-      { id: 'chainlink',     sym: 'LINK/USD' },
-      { id: 'matic-network', sym: 'POL/USD' },
-      { id: 'solana',        sym: 'SOL/USD' },
-      { id: 'avalanche-2',   sym: 'AVAX/USD' },
-      { id: 'arbitrum',      sym: 'ARB/USD' },
-      { id: 'dogecoin',      sym: 'DOGE/USD' },
+      { pair: 'BTCUSDT',  sym: 'BTC/USD' },
+      { pair: 'ETHUSDT',  sym: 'ETH/USD' },
+      { pair: 'LINKUSDT', sym: 'LINK/USD' },
+      { pair: 'SOLUSDT',  sym: 'SOL/USD' },
+      { pair: 'AVAXUSDT', sym: 'AVAX/USD' },
+      { pair: 'ARBUSDT',  sym: 'ARB/USD' },
+      { pair: 'DOGEUSDT', sym: 'DOGE/USD' },
+      { pair: 'MATICUSDT',sym: 'POL/USD' },
     ];
 
-    const IDS = COINS.map(c => c.id).join(',');
-    const API = 'https://api.coingecko.com/api/v3/simple/price'
-      + '?ids=' + IDS
-      + '&vs_currencies=usd&include_24hr_change=true';
+    const SYMBOLS = JSON.stringify(COINS.map(c => c.pair));
+    const API = 'https://api.binance.com/api/v3/ticker/24hr?symbols=' + encodeURIComponent(SYMBOLS);
 
     function fmt(price) {
-      if (price >= 1000)  return price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      if (price >= 1)     return price.toFixed(4);
-      return price.toFixed(6);
+      const p = parseFloat(price);
+      if (p >= 1000) return p.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      if (p >= 1)    return p.toFixed(4);
+      return p.toFixed(6);
     }
 
-    function buildItems(data) {
+    function buildItems(rows) {
+      const map = {};
+      rows.forEach(r => { map[r.symbol] = r; });
       return COINS.map(coin => {
-        const d = data[coin.id];
-        if (!d) return '';
-        const price  = d.usd;
-        const change = d.usd_24h_change;
+        const r = map[coin.pair];
+        if (!r) return '';
+        const change = parseFloat(r.priceChangePercent);
         const up     = change >= 0;
         const arrow  = up ? '▲' : '▼';
         const cls    = up ? 'up' : 'down';
         const sign   = up ? '+' : '';
         return `<span class="ticker-item">`
           + `<span class="sym">${coin.sym}</span>`
-          + `<span class="${cls}">${arrow} ${fmt(price)}</span>`
+          + `<span class="${cls}">${arrow} ${fmt(r.lastPrice)}</span>`
           + `<span class="delta ${cls}">${sign}${change.toFixed(2)}%</span>`
           + `</span>`;
       }).join('');
     }
 
-    function renderTicker(data) {
+    function renderTicker(rows) {
       const track = document.getElementById('ticker');
       if (!track) return;
-      const items = buildItems(data);
-      track.innerHTML = items + items; // duplicate for seamless loop
+      const items = buildItems(rows);
+      if (!items) return;
+      track.innerHTML = items + items; // duplicate for seamless CSS loop
     }
 
     let lastFetch = 0;
-    const MIN_INTERVAL = 55_000; // don't re-fetch if last fetch was < 55 s ago
 
     async function fetchPrices() {
       const now = Date.now();
-      if (now - lastFetch < MIN_INTERVAL) return;
+      if (now - lastFetch < 55_000) return;
       lastFetch = now;
       try {
-        const res  = await fetch(API);
+        const res = await fetch(API);
         if (!res.ok) return;
         const data = await res.json();
         renderTicker(data);
-      } catch (_) { /* network error — keep showing previous data */ }
+      } catch (_) { /* network error — keep previous data */ }
     }
 
-    // Fetch on load
     fetchPrices();
-
-    // Refresh every 60 s
     setInterval(fetchPrices, 60_000);
-
-    // Refresh when the tab becomes visible again
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible') fetchPrices();
     });
